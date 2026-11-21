@@ -7,17 +7,18 @@ Using 3.4 million e-commerce orders from 91APP (about 11.9% fail), can shopping 
 
 ## Approach
 - Features: counts of 18 behavior types in the 72 hours before each order, plus order, payment, shipping and member attributes.
-- Models: price-stratified XGBoost (teammates) and deep models — DNN, LSTM, GRU (my part, Keras).
-- Class imbalance handled with class weights; evaluated by AUC and recall.
-- This notebook contains the data preparation, DNN and LSTM; the GRU run and the team's XGBoost are reported in the final report but not included here.
+- Team models: price-stratified XGBoost (teammates) and deep models — DNN, LSTM, GRU (my part, Keras).
 
-## Results (AUC; 0.5 is chance)
+## Results reported in the team's final report (AUC; 0.5 is chance)
 | Model | AUC |
 |---|---|
 | DNN | **0.850** |
 | DNN, orders with behavior records | 0.858 |
 | LSTM | 0.705 (highest recall, 0.77) |
 | GRU | 0.704 |
+
+## What is in this notebook
+`order_failure_models.ipynb` is my exploratory model, not the exact runs behind the table: a two-branch network with a **bidirectional LSTM over the 72-hour behavior sequence** and a dense branch over static order features, trained on a **random sample of 50,000 orders** (to keep sequence building tractable) with class weights for the imbalance. It also includes a perturbation check of how much the behavior sequence contributes to AUC. The DNN, GRU and XGBoost runs from the report are not included.
 
 ## Data
 The 91APP dataset was provided for the course and is **not included**. The notebook expects CSV files under `data/`; outputs were cleared.
