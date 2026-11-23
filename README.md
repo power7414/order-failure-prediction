@@ -20,7 +20,7 @@ Using 3.4 million e-commerce orders from 91APP (about 11.9% fail), can shopping 
 ## What is in this notebook
 `order_failure_models.ipynb` is my exploratory model, not the exact runs behind the table: a two-branch network with a **bidirectional LSTM over the 72-hour behavior sequence** and a dense branch over static order features, trained on a **random sample of 50,000 orders** (to keep sequence building tractable) with class weights for the imbalance. It also includes a perturbation check of how much the behavior sequence contributes to AUC. The DNN, GRU and XGBoost runs from the report are not included.
 
-Limitations of this notebook: the event times inside each 72-hour window are simulated (`np.random.uniform`) because only per-window counts were available, so the LSTM cannot learn real ordering; behavior codes are fed as numbers rather than embeddings; and clipping and scaling are fitted before the split. Treat it as an exploratory model, not as the source of the reported AUC.
+Limitations of this notebook: the event times inside each 72-hour window are simulated with `np.random.uniform`, so the LSTM cannot learn real ordering; behavior codes are fed as numbers rather than embeddings; and clipping and scaling are fitted before the split. Treat it as an exploratory model, not as the source of the reported AUC.
 
 ## Data
 The 91APP dataset was provided for the course and is **not included**. The notebook expects CSV files under `data/`; outputs were cleared.
